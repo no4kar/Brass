@@ -27,6 +27,14 @@ void Acct::deposit(double amt) {
 	}
 }
 
+const Acct& Acct::operator=(const Acct& other) {
+	strncpy_s(fullName, other.fullName, MAX - 1);
+	fullName[MAX - 1] = '\0';
+	this->acctNum = other.acctNum;
+	this->bal = other.bal;
+	return *this;
+}
+
 ////////////////////////////////////////////Brass//////////////////////////////
 
 void Brass::view_account()const {
@@ -54,6 +62,11 @@ void Brass::withdraw(double amt) {
 	}
 }
 
+const Brass& Brass::operator=(const Brass& other) {
+	Acct::operator=(other);
+	return *this;
+}
+
 ////////////////////////////////////////////BrassPlus//////////////////////////////
 
 BrassPlus::BrassPlus(const char* s, long acctNum, double bal, double maxLoan, double rate) :
@@ -68,6 +81,14 @@ BrassPlus::BrassPlus(const Acct& obj,	double maxLoan, double rate) :
 	this->maxLoan = maxLoan;
 	owesBank = 0.0;
 	this->rate = rate;
+}
+
+const BrassPlus& BrassPlus::operator=(const BrassPlus& other) {
+	Acct::operator=(other);
+	maxLoan = other.maxLoan;
+	rate = other.rate;
+	owesBank = other.owesBank;
+	return *this;
 }
 
 void BrassPlus::view_account()const {
